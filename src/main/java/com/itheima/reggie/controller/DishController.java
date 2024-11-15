@@ -207,6 +207,9 @@ public class DishController {
     @PostMapping("/status/1")
     public R<String> status1(@RequestParam List<Long> ids){
         dishService.updateStatus(ids);
+        // 清理所有菜品的缓存数据
+        Set keys = redisTemplate.keys("dish_*");
+        redisTemplate.delete(keys);
         return R.success("启售菜品成功");
     }
 }
