@@ -14,6 +14,8 @@ import com.itheima.reggie.service.SetmealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +38,7 @@ public class SetmealController {
     * 新增套餐
     * 同时需要保存套餐和菜品的关系
     * */
+    @CacheEvict(value = "setmealCache", allEntries = true)
     @PostMapping
     public R<String> save(@RequestBody SetmealDto setmealDto){
         setmealService.saveWithDish(setmealDto);
@@ -88,6 +91,8 @@ public class SetmealController {
     /*
     * 删除套餐
     * */
+    //allEntries = true：表示删除setmealCache这个分类下边的所有缓存，默认值为false
+    @CacheEvict(value = "setmealCache", allEntries = true)
     @DeleteMapping
     public R<String> delete(@RequestParam List<Long> ids){
         log.info("要删除的套餐的id为：",ids);
@@ -109,6 +114,7 @@ public class SetmealController {
     /*
     * 修改套餐
     * */
+    @CacheEvict(value = "setmealCache", allEntries = true)
     @PutMapping
     public R<String> update(@RequestBody SetmealDto setmealDto){
         log.info("修改套餐为{}", setmealDto);
@@ -130,6 +136,7 @@ public class SetmealController {
     /*
      * 启售套餐
      * */
+    @CacheEvict(value = "setmealCache", allEntries = true)
     @PostMapping("/status/1")
     public R<String> status1(@RequestParam List<Long> ids){
         log.info("停售套餐id为{}",ids);
@@ -143,6 +150,7 @@ public class SetmealController {
     * 查询套餐
     * */
     @GetMapping("/list")
+    @Cacheable(value = "setmealCache", key = "#setmeal.categoryId + '_' + #setmeal.status")
     public R<List<Setmeal>> list(Setmeal setmeal){
         LambdaQueryWrapper<Setmeal> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.eq(Setmeal::getCategoryId, setmeal.getCategoryId());
