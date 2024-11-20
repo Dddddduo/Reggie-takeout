@@ -3,11 +3,38 @@ server:
 spring:
   application:
     name: reggie-take-out
-  datasource:
-    #    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/reggie
-    username: root
-    password: "0092"
+  shardingsphere:
+    datasource:
+      names:
+        master,slave
+      # 主数据源
+      master:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://192.168.165.131:3306/reggie?characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+        username: root
+        password: root
+      # 从数据源
+      slave:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://192.168.165.132:3306/reggie?characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
+        username: root
+        password: root
+    masterslave:
+      # 读写分离配置
+      load-balance-algorithm-type: round_robin
+      # 最终的数据源名称
+      name: dataSource
+      # 主库数据源名称
+      master-data-source-name: master
+      # 从库数据源名称列表，多个逗号分隔
+      slave-data-source-names: slave
+    props:
+      sql:
+        show: true # 开启控制台显示SQL，默认false
+  main:
+    allow-bean-definition-overriding: true
   redis:
     host: localhost
     port: 6379
@@ -16,6 +43,7 @@ spring:
   cache:
     redis:
       time-to-live: 1800000 #设置缓存过期时间
+
 mybatis-plus:
   configuration:
     #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
