@@ -31,7 +31,7 @@ public class R<T> implements Serializable {
         R r = new R();
         r.msg = msg;
         r.code = 0;
-        return r;
+        return  r;
     }
 
     public R<T> add(String key, Object value) {
