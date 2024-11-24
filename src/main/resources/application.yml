@@ -36,9 +36,9 @@ spring:
   main:
     allow-bean-definition-overriding: true
   redis:
-    host: localhost
+    host: 192.168.165.131
     port: 6379
-    #    password: 123456
+    password: 123456
     database: 0 #redis启动后有16个数据库 我们使用0号数据库
   cache:
     redis:
