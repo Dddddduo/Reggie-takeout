@@ -95,7 +95,7 @@ public class EmployeeController {
         // 调用service方法
         employeeService.save(employee);
 
-        return R.success("新曾员工成功");
+        return R.success("新增员工成功");
     }
 
     /*
