@@ -15,9 +15,10 @@
 
 ## 技术栈
 
-- **前端**：Vue.js、React、HTML5、CSS3
-- **后端**：Spring Boot、MyBatis、Spring Security
-- **数据库**：MySQL Linux
+- **前端**：Vue.js、HTML5、CSS3
+- **后端**：Spring Boot、MyBatis-Plus
+- **数据库**：MySQL 
+- **中间件**: Redis Linux
 - **版本控制**：Git
 
 ## 开发人员
@@ -31,4 +32,4 @@
 
 ## 联系方式
 
-- **协作者邮箱**：[https://github.com/Dddddduo](mailto:Dduo@example.com)
+- **Dduo**：[https://github.com/Dddddduo](mailto:Dduo@example.com)
