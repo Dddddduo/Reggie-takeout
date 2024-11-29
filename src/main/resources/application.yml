@@ -2,8 +2,8 @@ server:
   port: 8080
 spring:
 #  指定配置文件启动
-#  profiles:
-#    active: dduo
+  profiles:
+    active: dduo
 
   application:
     name: reggie-take-out
