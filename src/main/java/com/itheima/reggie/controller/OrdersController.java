@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/order")
 @Slf4j
 public class OrdersController {
+
     @Autowired
     private OrdersService ordersService;
 
@@ -25,4 +26,5 @@ public class OrdersController {
         ordersService.submit(orders);
         return R.success("下单成功");
     }
+
 }
